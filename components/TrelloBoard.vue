@@ -2,6 +2,7 @@
 	import type { Column, Task } from "@/types";
 	import draggable from "vuedraggable";
 	import { nanoid } from "nanoid";
+
 	const columns = ref<Column[]>([
 		{
 			title: "Backlog",
@@ -25,6 +26,8 @@
 		{ title: "QA", id: nanoid(), tasks: [] },
 		{ title: "Complete", id: nanoid(), tasks: [] },
 	]);
+
+	const alt = useKeyModifier("Alt");
 </script>
 
 <template>
@@ -46,7 +49,7 @@
 
 				<draggable
 					v-model="column.tasks"
-					group="tasks"
+					:group="{ name: 'tasks', pull: alt ? 'clone' : true }"
 					handle=".drag-handle"
 					:animation="150"
 					item-key="id"
